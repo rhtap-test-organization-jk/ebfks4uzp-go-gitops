@@ -1,0 +1,18 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata: 
+  labels: 
+    app.kubernetes.io/instance: ebfks4uzp-go
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: ebfks4uzp-go 
+  name: ebfks4uzp-go
+spec:
+  port:
+    targetPort: 8081 
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+  to:
+    kind: Service
+    name: ebfks4uzp-go
+    weight: 100 

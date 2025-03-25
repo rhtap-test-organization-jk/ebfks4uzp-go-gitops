@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ebfks4uzp-go-ci
+  namespace: rhtap-gitops
+  finalizers: ["resources-finalizer.argocd.argoproj.io"]
+spec:
+  project: default
+  source:
+    path: ./components/ebfks4uzp-go/overlays/ci
+    repoURL: https://github.com/rhtap-test-organization-jk/ebfks4uzp-go-gitops.git
+    targetRevision: main
+  destination:
+    namespace: rhtap-app-ci
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    managedNamespaceMetadata:
+      labels:
+        argocd.argoproj.io/managed-by: rhtap-gitops
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - PruneLast=true
